@@ -1,12 +1,12 @@
 import { createTheme } from '@rneui/themed';
 
-import { Colors, FontFamily, FontSize } from './Variables';
+import { Colors, FontFamily, FontSize } from './variables';
 
 const theme = createTheme({
   components: {
     Text: {
       style: {
-        fontFamily: FontFamily.primary,
+        fontFamily: FontFamily.tertiary,
         fontSize: FontSize.regular,
       },
       h1style: {
@@ -27,13 +27,14 @@ const theme = createTheme({
       },
     },
     Button: {
-      raised: true,
-      color: Colors.primary,
+      raised: false,
+      color: Colors.green,
       titleStyle: {
-        fontFamily: FontFamily.secondary,
+        fontFamily: FontFamily.tertiary,
       },
       buttonStyle: {
         height: 45,
+        borderRadius: 5,
       },
     },
     Input: {

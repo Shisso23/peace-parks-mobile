@@ -5,18 +5,18 @@ import { useNavigation } from '@react-navigation/native';
 import tw from 'twrnc';
 
 import { AuthStackProps } from '../../../navigation/auth/types';
-import { RegisterLinkProps } from './types';
+import { LogInLinkProps } from './types';
 
-export const RegisterLink: React.FC<RegisterLinkProps> = ({ containerStyle }) => {
+export const LogInLink: React.FC<LogInLinkProps> = ({ containerStyle }) => {
   const navigation = useNavigation<AuthStackProps>();
 
-  const _handleRegister = () => navigation.navigate('Register');
+  const _handleLogIn = () => navigation.navigate('SignIn');
 
   return (
     <View style={containerStyle}>
-      <Text style={tw`text-white`}>Don't have an account? </Text>
-      <TouchableOpacity style={tw`self-center`} delayPressIn={0} onPress={_handleRegister}>
-        <Text style={tw`text-green-400`}>Register</Text>
+      <Text style={tw`text-black`}>Already have an account? </Text>
+      <TouchableOpacity style={tw`self-center`} delayPressIn={0} onPress={_handleLogIn}>
+        <Text style={tw`text-green-500`}>Log In</Text>
       </TouchableOpacity>
     </View>
   );

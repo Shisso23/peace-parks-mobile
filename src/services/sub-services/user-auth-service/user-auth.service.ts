@@ -15,7 +15,7 @@ const login = (formData: LoginValueProps) => {
   const signInUrl = authUrls.tokenUrl();
   const oAuthData = authUtils.constructOAuthSignInData(formData);
 
-  return networkService.post(signInUrl, oAuthData).then(authUtils.storeAccessAndRefreshTokens);
+  return networkService.postForm(signInUrl, oAuthData).then(authUtils.storeAccessAndRefreshTokens);
 };
 
 const logout = () => {
@@ -26,7 +26,7 @@ const register = (formData: RegisterValueProps) => {
   const registerUrl = authUrls.registerUrl();
   const apiDto = registerDto(formData);
 
-  return networkService.post(registerUrl, apiDto).catch((err) => {
+  return networkService.post(registerUrl, apiDto).then((token) => networkService.patch(authUrls.confirmationUrl(token.data))).catch((err) => {
     err.errors = registerModel(err.errors);
     return Promise.reject(err);
   });
