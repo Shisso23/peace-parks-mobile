@@ -27,9 +27,9 @@ export const LoginForm: React.FC = () => {
 
   const FormComponents = ({ isSubmitting, handleSubmit }: FormikProps<LoginValueProps>) => (
     <>
-      <TextField name="email" label="Email" required keyboardType="email-address" />
-      <TextField name="password" label="Password" required isSecure />
-      <Button title="Login" onPress={handleSubmit} loading={isSubmitting} />
+      <TextField name="email" label="Email Address" keyboardType="email-address" />
+      <TextField name="password" label="Password" isSecure />
+      <Button title="Continue" onPress={handleSubmit} loading={isSubmitting} />
     </>
   );
 

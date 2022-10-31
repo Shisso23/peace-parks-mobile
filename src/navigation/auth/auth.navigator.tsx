@@ -22,6 +22,7 @@ export const AuthNavigator = () => {
         component={LoginPage}
         options={{
           title: 'Sign In',
+          headerShown: false,
         }}
       />
       <AuthStack.Screen
@@ -29,7 +30,7 @@ export const AuthNavigator = () => {
         component={ForgotPasswordPage}
         options={{ title: 'Forgot Password' }}
       />
-      <AuthStack.Screen name="Register" component={RegisterPage} options={{ title: 'Register' }} />
+      <AuthStack.Screen name="Register" component={RegisterPage} options={{ title: 'Register', headerShown: false }} />
       <AuthStack.Screen name="TermsAndConditions" component={TermsAndConditionsPage} />
     </AuthStack.Navigator>
   );

@@ -15,7 +15,7 @@ export const ForgotPasswordLink: React.FC<ForgotPasswordLinkProps> = ({ containe
   return (
     <View style={containerStyle}>
       <TouchableOpacity style={tw`self-center`} delayPressIn={0} onPress={_handleForgotPassword}>
-        <Text>Forgot Password</Text>
+        <Text style={tw`text-white`}>Forgot Password</Text>
       </TouchableOpacity>
     </View>
   );

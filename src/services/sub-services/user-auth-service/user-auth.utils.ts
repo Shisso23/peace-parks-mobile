@@ -5,11 +5,10 @@ import storageService from '../storage-service/storage.service';
 import appConfig from '../../../config';
 
 const storeAccessAndRefreshTokens = (apiResponse: Object) => {
-  const accessToken = _.get(apiResponse, 'data.access_token', null);
-  const refreshToken = _.get(apiResponse, 'data.refresh_token', null);
+  const accessToken = _.get(apiResponse, 'data.token', null);
+  console.log(accessToken);
   return Promise.all([
     storageService.storeAccessToken(accessToken),
-    storageService.storeRefreshToken(refreshToken),
   ]);
 };
 
@@ -22,9 +21,6 @@ const getAccessAndRefreshTokens = () =>
 const constructOAuthSignInData = ({ email, password }: LoginValueProps) => ({
   email,
   password,
-  grant_type: 'password',
-  client_id: appConfig.clientId,
-  client_secret: appConfig.clientSecret,
 });
 
 const constructOAuthTokenRefreshData = () =>

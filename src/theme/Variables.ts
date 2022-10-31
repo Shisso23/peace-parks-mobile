@@ -10,6 +10,8 @@ export const Colors = {
   warning: '#D4B483',
   error: '#C1666B',
   background: '#ffffff',
+  green: '#289D48',
+  grey: '#D8D8D8'
 };
 
 export const FontSize = {
@@ -21,4 +23,5 @@ export const FontSize = {
 export const FontFamily = {
   primary: 'system font',
   secondary: 'system font',
+  tertiary: 'Arial',
 };

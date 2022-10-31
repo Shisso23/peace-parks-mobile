@@ -1,8 +1,12 @@
 import { RegisterValueProps } from '../../../components';
 
 export const registerDto = (formData: RegisterValueProps) => ({
-  email: formData?.email,
+  username: formData?.email,
   password: formData?.password,
-  confirm_password: formData?.confirmPassword,
-  terms_and_conditions: formData?.termsAndConditions,
+  email: formData?.email,
+  firstName: formData?.name,
+  lastName: formData?.surname,
+  regionCode: formData?.regionCode,
+  phoneNumber: formData?.phoneNumber,
+  confirmLink: formData?.email,
 });
