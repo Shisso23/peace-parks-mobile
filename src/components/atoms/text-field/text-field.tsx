@@ -1,12 +1,11 @@
-import React from 'react';
-import { Input } from '@rneui/themed';
+import React, { useState } from 'react';
 import { useFormikContext } from 'formik';
 import { HelperText, TextInput } from 'react-native-paper';
 import tw from 'twrnc';
+import { View } from 'react-native';
 
 import { TextFieldProps } from './type';
 import { Colors } from '../../../theme/variables';
-import { View } from 'react-native';
 
 export const TextField: React.FC<TextFieldProps> = ({
   name,
@@ -33,6 +32,9 @@ export const TextField: React.FC<TextFieldProps> = ({
   };
 
   const requiredLabel = required ? `${label}*` : label;
+  const [isPasswordVisible, setPasswordVisible] = useState(true);
+
+  const handlePasswordVisibility = () => setPasswordVisible(!isPasswordVisible);
 
   return (
     <View style={style}>
@@ -44,12 +46,17 @@ export const TextField: React.FC<TextFieldProps> = ({
         placeholder={placeholder}
         errorMessage={errorText ?? (errors[name] as string)}
         keyboardType={keyboardType}
-        secureTextEntry={isSecure}
+        secureTextEntry={isSecure ? isPasswordVisible : isSecure}
         style={[tw`rounded-lg bg-white`, {height: height}, style]}
         mode={mode}
         activeUnderlineColor={Colors.green}
         activeOutlineColor={Colors.green}
         outlineColor={Colors.grey}
+        right={isSecure ? <TextInput.Icon
+          name={isPasswordVisible ? "eye-off" : "eye"}
+          color={Colors.grey}
+          onPress={handlePasswordVisibility}
+        /> : null}
         />
       <HelperText type="error" visible={true} style={style}>{errorText ? errorText : (errors[name] as string)}</HelperText>
     </View>
