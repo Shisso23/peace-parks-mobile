@@ -51,7 +51,7 @@ export const Form = <T extends Record<string, unknown>>({
       initialValues={initialValues}
       validationSchema={toFormikValidationSchema(validationSchema)}
       validateOnBlur
-      validateOnChange={false}
+      validateOnChange={true}
       onSubmit={_handleSubmission}
       enableReinitialize
     >

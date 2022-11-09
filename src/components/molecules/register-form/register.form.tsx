@@ -1,15 +1,15 @@
 import React from 'react';
-import { Button } from '@rneui/themed';
+import { Button, Input, Text } from '@rneui/themed';
 import { FormikProps } from 'formik';
 import { useMutation } from '@tanstack/react-query';
 import Toast from 'react-native-toast-message';
 import tw from 'twrnc';
+import { StyleSheet, View } from 'react-native';
 
-import { TextField, TermsAndConditions, Form, ErrorObject } from '../../atoms';
+import { StyledTextField, TermsAndConditions, Form, ErrorObject, InputBox } from '../../atoms';
 import { userAuthService } from '../../../services';
 import { registerSchema } from './schemas';
 import { RegisterValueProps } from './types';
-import { StyleSheet, View } from 'react-native';
 import { CheckItem } from '../../atoms/check-item/check-item';
 
 export const RegisterForm = () => {
@@ -33,18 +33,19 @@ export const RegisterForm = () => {
 
     return (
       <>        
-        <TextField name="name" label="Name" required keyboardType="default" mode="outlined" height={45}/>
-        <TextField name="surname" label="Surname" required keyboardType="default" mode="outlined" height={45}/>
-        <TextField name="email" label="Email" required keyboardType="email-address" mode="outlined" height={45}/>
-        <View style={tw`flex flex-row`}>
-          <TextField name="regionCode" label="Code" placeholder="+27" required keyboardType="phone-pad" mode="outlined" height={45} style={tw`flex-1 mr-1`}/>
-          <TextField name="phoneNumber" label="Phone No." required keyboardType="phone-pad" mode="outlined" height={45} style={tw`flex-3`}/>
+        <StyledTextField name="name" label="Full Name" placeholder="Name Surname" required keyboardType="default" mode="outlined" height={45}/>
+        <StyledTextField name="email" label="Email" placeholder="email@mail.com" required keyboardType="email-address" mode="outlined" height={45}/>
+        <View style={tw`border-2 rounded-xl mb-8 border-gray-200 flex flex-row`}>
+          <Text style={tw`text-green-600 absolute z-10 -top-2 left-4 bg-white px-1`}>Phone No.</Text>
+            <InputBox name="regionCode" label="Region" placeholder="(+27)" required keyboardType="phone-pad" height={45} style={tw`max-w-[20]`} />
+            <Text style={tw`text-gray-300 bg-white text-2xl absolute left-16 top-2.5`}>|</Text>
+            <InputBox name="phoneNumber" label="phoneNumber" placeholder="81 123 456" required keyboardType="phone-pad" height={45} style={tw`absolute -left-68 -top-4.5 z-10`} errorStyle={tw`absolute -left-67 top-13`} />
         </View>
-        <TextField name="password" label="Password" required isSecure mode="outlined" height={45}/>
-        <TextField name="confirmPassword" label="Confirm Password" required isSecure mode="outlined" height={45}/>
+        <StyledTextField name="password" placeholder="Enter Password" label="Password" required isSecure mode="outlined" height={45}/>
+        <StyledTextField name="confirmPassword" placeholder="Enter Password" label="Re-Password" required isSecure mode="outlined" height={45}/>
         <TermsAndConditions checked={values.termsAndConditions} onPress={onTerms}/>
         <CheckItem checked={values.mailSubscription} onPress={onSubscribe} textInfo="Subscribe to our mailing list"/>
-        <Button title="Continue" onPress={handleSubmit} loading={isSubmitting} style={tw`mt-10`}/>
+        <Button title="Continue" onPress={handleSubmit} loading={isSubmitting} style={tw`mt-15`}/>
       </>
     );
   };
@@ -53,7 +54,6 @@ export const RegisterForm = () => {
     <Form
       initialValues={{
         name:'',
-        surname: '',
         email: '',
         regionCode:'',
         phoneNumber: '',

@@ -1,7 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
 import { Text, Icon } from '@rneui/themed';
 import React from 'react';
-import { Image, TouchableOpacity, View } from 'react-native';
+import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 import tw from 'twrnc';
 import { AuthStackProps } from '../../../../navigation';
 
@@ -16,11 +16,11 @@ export const RegisterPage: React.FC = () => {
   const _handleLogin = () => navigation.navigate('SignIn');
 
   return (
-    <FormScreenPeaceParks contentContainerStyle={tw`px-5 pt-20`}>
+    <FormScreenPeaceParks contentContainerStyle={tw`px-5 pt-15`}>
       <View>
           <TouchableOpacity style={tw`flex flex-row mb-4`} delayPressIn={0} onPress={_handleLogin}>
-            <Image source={Images.backArrow}/>
-            <Image source={Images.backPlaceholder} style={tw`ml-2`}/>
+            <Image source={Images.backArrow} style={styles.backArrow} />
+            <Image source={Images.backPlaceholder} style={[tw`ml-2`, styles.backPlaceholder]}/>
           </TouchableOpacity>
         </View>
       <Text style={tw`text-green-500 text-3xl`}>Register</Text>
@@ -30,3 +30,15 @@ export const RegisterPage: React.FC = () => {
     </FormScreenPeaceParks>
   )
 };
+
+const styles = StyleSheet.create({
+  backArrow: {
+    resizeMode: 'contain',
+    width: 12,
+    marginTop: 3
+  },
+  backPlaceholder: {
+    resizeMode: 'contain',
+    width: 35
+  }
+})
