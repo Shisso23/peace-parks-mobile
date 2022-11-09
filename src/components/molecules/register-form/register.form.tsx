@@ -1,17 +1,16 @@
 import React from 'react';
-import { Button, Input, Text } from '@rneui/themed';
+import { Button, Text } from '@rneui/themed';
 import { FormikProps } from 'formik';
 import { useMutation } from '@tanstack/react-query';
 import Toast from 'react-native-toast-message';
 import tw from 'twrnc';
-import { StyleSheet, View } from 'react-native';
+import { View } from 'react-native';
 
-import { TermsAndConditions, Form, ErrorObject, InputBox } from '../../atoms';
+import { TermsAndConditions, Form, ErrorObject, InputBox, StyledTextField } from '../../atoms';
 import { userAuthService } from '../../../services';
 import { registerSchema } from './schemas';
 import { RegisterValueProps } from './types';
 import { CheckItem } from '../../atoms/check-item/check-item';
-import { StyledTextField } from '../../atoms/styled-text-field/styled-text-field';
 
 export const RegisterForm = () => {
   const { mutateAsync } = useMutation(userAuthService.register, {
