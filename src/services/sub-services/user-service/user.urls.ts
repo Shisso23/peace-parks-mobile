@@ -1,7 +1,8 @@
 import appConfig from '../../../config';
 
-const userBaseUrl = `${appConfig.apiUrl}/users`;
+const { hostUrl } = appConfig;
 
 export default {
-  userUrl: () => `${userBaseUrl}/show_details`,
+  userUrl: () => `${hostUrl}/AuthenticatedUser`,
+  profilePicUrl: () => `${hostUrl}/AuthenticatedUser/profile-pic`,
 };
