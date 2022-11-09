@@ -1,12 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useFormikContext } from 'formik';
-import { HelperText, TextInput } from 'react-native-paper';
 import tw from 'twrnc';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 
 import { InputBoxProps } from './type';
 import { Colors } from '../../../theme/variables';
-import { Input, Text } from '@rneui/themed';
+import { Input } from '@rneui/themed';
 
 export const InputBox: React.FC<InputBoxProps> = ({
   name,

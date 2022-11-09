@@ -9,7 +9,7 @@ import { useNavigation } from '@react-navigation/native';
 import { Switch } from 'react-native-paper';
 import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 
-import { ErrorObject, Form, InputBox, TextField } from '../../atoms';
+import { ErrorObject, Form, InputBox, StyledTextField } from '../../atoms';
 import { userService } from '../../../services';
 import { RootReducer } from '../../../reducers';
 import { profileSchema } from './schemas';
@@ -17,7 +17,6 @@ import { ProfileValueProps } from './types';
 import { Colors } from '../../../theme/variables';
 import images from '../../../theme/images';
 import { AppStackProps } from '../../../navigation';
-import { StyledTextField } from '../../atoms/styled-text-field/styled-text-field';
 
 export const ProfileForm = () => {
   const { user } = useSelector((reducers: RootReducer) => reducers.userReducer);

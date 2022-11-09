@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useFormikContext } from 'formik';
-import { HelperText, TextInput } from 'react-native-paper';
+import { TextInput } from 'react-native-paper';
 import tw from 'twrnc';
 import { StyleSheet, View } from 'react-native';
 import { Input, Text } from '@rneui/themed';
