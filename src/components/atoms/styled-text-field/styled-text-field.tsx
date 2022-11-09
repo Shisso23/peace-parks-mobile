@@ -20,7 +20,8 @@ export const StyledTextField: React.FC<StyledTextFieldProps> = ({
   isSecure,
   mode,
   height,
-  style
+  style,
+  defaultValue
 }) => {
   const { setFieldValue, handleBlur, values, errors } = useFormikContext<any>();
 
@@ -41,6 +42,7 @@ export const StyledTextField: React.FC<StyledTextFieldProps> = ({
     <View style={[style, tw`border-2 rounded-xl mb-8 border-gray-200`]}>
        <Text style={tw`text-green-600 absolute z-10 -top-2 left-4 bg-white px-1`}>{requiredLabel}</Text> 
       <Input
+        defaultValue={defaultValue}
         value={value ?? values[name]}
         onChangeText={manageChange}
         onBlur={handleBlur(name)}

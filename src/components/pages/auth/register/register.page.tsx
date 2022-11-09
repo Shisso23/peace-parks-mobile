@@ -3,8 +3,8 @@ import { Text, Icon } from '@rneui/themed';
 import React from 'react';
 import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 import tw from 'twrnc';
-import { AuthStackProps } from '../../../../navigation';
 
+import { AuthStackProps } from '../../../../navigation';
 import { RegisterForm } from '../../../molecules';
 import { FormScreenPeaceParks } from '../../../peaceparkss';
 import Images from '../../../../theme/images';

@@ -2,7 +2,7 @@ import React from 'react';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import { HomePage, ProfilePage, TermsAndConditionsPage } from '../../components';
+import { ForgotPasswordPage, HomePage, ProfilePage, TermsAndConditionsPage } from '../../components';
 import { useTheme } from '../../hooks';
 import { AppStackList, DrawerList } from './types';
 
@@ -18,6 +18,11 @@ export const AppNavigator = () => {
         name="App Home"
         component={DrawerNavigator}
         options={{ headerShown: false }}
+      />
+      <AppStack.Screen
+        name="ResetPassword"
+        component={ForgotPasswordPage}
+        options={{ title: 'Forgot Password' }}
       />
       <AppStack.Screen name="TermsAndConditions" component={TermsAndConditionsPage} />
     </AppStack.Navigator>
@@ -37,7 +42,7 @@ const DrawerNavigator = () => {
       <Drawer.Screen
         name="Profile"
         component={ProfilePage}
-        options={{ headerShown: true, title: 'Profile' }}
+        options={{ headerShown: true, title: 'Settings' }}
       />
     </Drawer.Navigator>
   );

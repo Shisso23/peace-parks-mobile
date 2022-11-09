@@ -15,4 +15,5 @@ export type StyledTextFieldProps = {
   mode?: "flat" | "outlined" | undefined;
   height?: number;
   style?: Style;
+  defaultValue?: any;
 };

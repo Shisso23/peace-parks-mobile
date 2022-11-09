@@ -5,14 +5,14 @@ export default ({ Colors, FontFamily }) => ({
     cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
     headerBackTitleVisible: false,
     headerStyle: {
-      backgroundColor: Colors.secondary,
+      backgroundColor: Colors.white,
       shadowRadius: 0,
       shadowColor: 'transparent',
       elevation: 0,
     },
     headerTitleStyle: {
-      fontFamily: FontFamily.secondary,
-      color: Colors.white,
+      fontFamily: FontFamily.tertiary,
+      color: Colors.green,
     },
     headerTintColor: Colors.white,
     cardStyle: {

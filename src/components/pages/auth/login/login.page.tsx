@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
-import { Image, ImageBackground, Dimensions, StyleSheet, View, TouchableOpacity } from 'react-native';
+import { Image, ImageBackground, Dimensions, View, TouchableOpacity, StyleSheet } from 'react-native';
 import tw from 'twrnc';
+import { Button } from '@rneui/themed';
 
 import { RegisterLink, ForgotPasswordLink } from '../../../atoms';
 import { LoginForm } from '../../../molecules';
 import { FormScreenPeaceParks } from '../../../peaceparkss';
 import Images from '../../../../theme/images';
-import { Button, Icon, Text } from '@rneui/themed';
-import { Colors } from '../../../../theme/variables';
 
 export const LoginPage = () => {
 
