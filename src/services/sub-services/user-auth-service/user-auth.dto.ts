@@ -5,8 +5,10 @@ export const registerDto = (formData: RegisterValueProps) => ({
   password: formData?.password,
   email: formData?.email,
   firstName: formData?.name,
-  lastName: formData?.surname,
+  lastName: formData?.name,
   regionCode: formData?.regionCode,
   phoneNumber: formData?.phoneNumber,
   confirmLink: formData?.email,
+  agreeToPrivacyPolicy: formData?.termsAndConditions,
+  subscribeToMail: formData?.mailSubscription,
 });

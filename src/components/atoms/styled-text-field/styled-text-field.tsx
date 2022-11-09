@@ -2,12 +2,13 @@ import React, { useState } from 'react';
 import { useFormikContext } from 'formik';
 import { HelperText, TextInput } from 'react-native-paper';
 import tw from 'twrnc';
-import { View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
+import { Input, Text } from '@rneui/themed';
 
-import { TextFieldProps } from './type';
+import { StyledTextFieldProps } from './type';
 import { Colors } from '../../../theme/variables';
 
-export const TextField: React.FC<TextFieldProps> = ({
+export const StyledTextField: React.FC<StyledTextFieldProps> = ({
   name,
   label,
   placeholder,
@@ -31,14 +32,15 @@ export const TextField: React.FC<TextFieldProps> = ({
     }
   };
 
-  const requiredLabel = required ? `${label}*` : label;
+  const requiredLabel = required ? `${label}` : label;
   const [isPasswordHidden, setPasswordHidden] = useState(true);
 
   const handlePasswordVisibility = () => setPasswordHidden(!isPasswordHidden);
 
   return (
-    <View style={style}>
-      <TextInput
+    <View style={[style, tw`border-2 rounded-xl mb-8 border-gray-200`]}>
+       <Text style={tw`text-green-600 absolute z-10 -top-2 left-4 bg-white px-1`}>{requiredLabel}</Text> 
+      <Input
         value={value ?? values[name]}
         onChangeText={manageChange}
         onBlur={handleBlur(name)}
@@ -47,18 +49,40 @@ export const TextField: React.FC<TextFieldProps> = ({
         errorMessage={errorText ?? (errors[name] as string)}
         keyboardType={keyboardType}
         secureTextEntry={isSecure ? isPasswordHidden : isSecure}
-        style={[tw`rounded-lg bg-white`, {height: height}, style]}
-        mode={mode}
-        activeUnderlineColor={Colors.green}
-        activeOutlineColor={Colors.green}
-        outlineColor={Colors.grey}
-        right={isSecure ? <TextInput.Icon
+        style={[tw`rounded-lg bg-white m-1`, {height}, style]}
+        inputContainerStyle={styles.inputContainerStyle}
+        labelStyle={styles.labelStyle}
+        errorStyle={styles.errorStyle}
+        selectionColor={Colors.grey} 
+        placeholderTextColor={Colors.grey}
+        rightIcon={isSecure ? <TextInput.Icon
           name={isPasswordHidden ? "eye-off" : "eye"}
           color={Colors.grey}
           onPress={handlePasswordVisibility}
-        /> : null}
+        /> : undefined}
+        rightIconContainerStyle={styles.rightIconContainerStyle}
         />
-      <HelperText type="error" visible={true} style={style}>{errorText ? errorText : (errors[name] as string)}</HelperText>
     </View>
   );
 };
+
+
+const styles = StyleSheet.create({
+  inputContainerStyle: {
+    borderBottomWidth:0,
+    height: 4,
+    paddingTop: 8,
+    paddingLeft: 8,
+  },
+  rightIconContainerStyle: {
+    marginRight: 20,
+    marginBottom: 12
+  },
+  labelStyle: {
+    color: Colors.transparent
+  },
+  errorStyle: {
+    color: Colors.grey,
+    marginLeft: 'auto'
+  }
+})

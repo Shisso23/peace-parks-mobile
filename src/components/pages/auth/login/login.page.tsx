@@ -39,12 +39,11 @@ export const LoginPage = () => {
   <ImageBackground source={Images.loginBackground} style={tw`w-full h-full`}>
     <View style={tw`w-full h-full bg-[#00010185]`}>
       {isLogIn ?
-        <TouchableOpacity delayPressIn={0} onPress={handleLogin} style={tw`mt-20 ml-6 z-10 absolute`}>
-          <Image source={Images.back}/>
+        <TouchableOpacity delayPressIn={0} onPress={handleLogin} style={tw`mt-10 ml-6 z-10 absolute`}>
+          <Image source={Images.back} style={styles.backImage}/>
         </TouchableOpacity> : null }
       <View>
-        <Image source={Images.logo} style={tw`flex self-center mt-${screenHeight*0.07}`}></Image>
-        <Image source={Images.brand} style={tw`flex self-center`}></Image>
+        <Image source={Images.logo} style={[tw`flex self-center mt-${screenHeight*0.1}`, styles.logoImage]}></Image>
       </View>
       <FormScreenPeaceParks contentContainerStyle={tw`px-${screenHeight*0.007} mt-auto`}>
         {RenderLogin(isLogIn)}
@@ -56,3 +55,14 @@ export const LoginPage = () => {
 
 
 const screenHeight = Dimensions.get('window').height;
+
+const styles = StyleSheet.create({
+  backImage: {
+    resizeMode: 'contain',
+    width: 60
+  },
+  logoImage: {
+    resizeMode: 'contain',
+    width: '75%'
+  }
+})
