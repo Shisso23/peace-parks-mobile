@@ -1,5 +1,5 @@
-import React from 'react';
-import { Button, Text } from '@rneui/themed';
+import React, { useState } from 'react';
+import { Button, Dialog, Text } from '@rneui/themed';
 import { FormikProps } from 'formik';
 import { useSelector } from 'react-redux';
 import { useMutation, useQuery } from '@tanstack/react-query';
@@ -31,6 +31,15 @@ export const ProfileForm = () => {
   const _handleResetPassword = () => navigation.navigate('ResetPassword');
   const _goToPrivacyPolicy = () => navigation.navigate('TermsAndConditions');
 
+  const [isDialogVisible, setDialogVisible] = useState(false);
+  const [isConfirming, setConfirming] = useState(false);
+  const [password, setPassword] = useState('');
+
+  const handleDialog = () => {
+    setPassword("");
+    setDialogVisible(!isDialogVisible);
+  };
+
   const submitForm = (formData: ProfileValueProps) => mutateAsync(formData);
   const userRef = useQuery(["user"], userService.getUser)
 
@@ -38,8 +47,43 @@ export const ProfileForm = () => {
     const onChildFriendly = () => setFieldValue('childFriendly', !values.childFriendly);
     const onSubscribe = () => setFieldValue('subscribedToMail', !values.subscribedToMail);
 
+    const handleDialogClose = () => {
+      setPassword("");
+      setDialogVisible(!isDialogVisible);
+      onChildFriendly();
+    };
+
+    const handleDialogForgotPassword = () => {
+      setDialogVisible(!isDialogVisible);
+      setPassword("");
+      onChildFriendly();
+      _handleResetPassword();
+    };
+
+    const handleConfirmPassword = () => {
+      setConfirming(true);
+      userService.confirmPassword(password).then(verify => {
+        if(verify.data) {
+          handleDialog()
+          setConfirming(false);
+        } else {
+          Toast.show({ type: 'error', text1: 'Incorrect Password'})
+          setConfirming(false);
+        }
+      });
+    }
+
     return (
     <>
+      <Dialog isVisible={isDialogVisible} overlayStyle={tw`rounded-xl`} onBackdropPress={handleDialogClose}>
+        <Text style={tw`text-lg mb-4`}>Child Friendly Feature</Text>
+        <Text style={tw`text-gray-500 mb-8`}>To enable/disable this feature, please enter your account's password.</Text>
+        <StyledTextField value={password} name="password" placeholder="Enter Password" label="Password" required isSecure mode="outlined" height={30} onChange={setPassword} style={tw`border-2 rounded-xl mb-2 mt-8 border-gray-200`}/>
+        <TouchableOpacity onPress={handleDialogForgotPassword}>
+          <Text style={tw`text-gray-400 ml-auto mb-4`}>Forgot Password</Text>
+        </TouchableOpacity>
+        <Button title="SUBMIT" onPress={handleConfirmPassword} loading={isConfirming} style={tw`mt-8 mb-4`}/>
+      </Dialog>
       <StyledTextField name="firstName" label="Full Name" required keyboardType="email-address" placeholder="Full Name"/>
       <StyledTextField name="email" label="Email" required keyboardType="email-address" placeholder="Email"/>
       <View style={tw`border-2 rounded-xl mb-8 border-gray-200 flex flex-row`}>
@@ -50,7 +94,7 @@ export const ProfileForm = () => {
         </View>
       <View style={tw`flex flex-row border-b border-b-green-300 mb-4`}>
         <Text style={tw`mt-2`}>Child Friendly Feature</Text>
-        <Switch value={values.childFriendly} trackColor={{ true: Colors.green, false: Colors.grey }} onChange={onChildFriendly} style={[tw`ml-auto mb-2`, {transform: [{scaleX: 0.8}, {scaleY: 0.8}]}]}/>
+        <Switch value={values.childFriendly} trackColor={{ true: Colors.green, false: Colors.grey }} onChange={onChildFriendly} style={[tw`ml-auto mb-2`, {transform: [{scaleX: 0.8}, {scaleY: 0.8}]}]} onTouchStart={handleDialog}/>
       </View>
       <View style={tw`flex flex-row border-b border-b-green-300 mb-4`}>
         <Text style={tw`mt-2`}>Newsletter</Text>

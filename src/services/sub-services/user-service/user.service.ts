@@ -43,9 +43,18 @@ const changeProfilePic = (image: FormData) => {
       return Promise.reject(error)});
 };
 
+const confirmPassword = (password: string) => {
+  const url = userUrls.confirmPasswordUrl();
+
+  return authNetworkService.post(url, password).catch((error) => {
+    return Promise.reject(error);
+  });
+};
+
 export default {
   getUser,
   updateUser,
   getProfilePic,
-  changeProfilePic
+  changeProfilePic,
+  confirmPassword
 };
