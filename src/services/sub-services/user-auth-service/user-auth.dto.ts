@@ -11,4 +11,5 @@ export const registerDto = (formData: RegisterValueProps) => ({
   confirmLink: formData?.email,
   agreeToPrivacyPolicy: formData?.termsAndConditions,
   subscribeToMail: formData?.mailSubscription,
+  childFriendly: formData?.childFriendly,
 });

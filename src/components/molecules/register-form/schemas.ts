@@ -12,6 +12,7 @@ export const registerSchema = z
     confirmPassword: commonValidations.password,
     termsAndConditions: z.literal(true),
     mailSubscription: z.boolean(),
+    childFriendly: z.boolean(),
   })
   .refine(({ password, confirmPassword }) => password === confirmPassword, {
     message: 'Passwords must match',
@@ -28,4 +29,5 @@ export const registerApiSchema = z.object({
   confirm_password: commonValidations.password,
   terms_and_conditions: z.literal(true),
   mailSubscription: z.boolean(),
+  childFriendly: z.boolean(),
 });
