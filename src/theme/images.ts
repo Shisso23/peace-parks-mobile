@@ -14,6 +14,7 @@
     backArrow: require('../assets/images/back-arrow.png'),
     rightArrow: require('../assets/images/right-arrow.png'),
     camera: require('../assets/images/camera-icon.png'),
+    close: require('../assets/images/close-circle.png'),
     profile: require('../assets/images/example-profile.png'),
     profile2: require('../assets/images/default.jpg'),
   };
