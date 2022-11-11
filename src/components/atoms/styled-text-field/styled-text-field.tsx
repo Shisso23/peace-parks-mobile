@@ -39,7 +39,7 @@ export const StyledTextField: React.FC<StyledTextFieldProps> = ({
   const handlePasswordVisibility = () => setPasswordHidden(!isPasswordHidden);
 
   return (
-    <View style={[style, tw`border-2 rounded-xl mb-8 border-gray-200`]}>
+    <View style={[style ?? tw`border-2 rounded-xl mb-8 border-gray-200`]}>
        <Text style={tw`text-green-600 absolute z-10 -top-2 left-4 bg-white px-1`}>{requiredLabel}</Text> 
       <Input
         defaultValue={defaultValue}
@@ -51,7 +51,7 @@ export const StyledTextField: React.FC<StyledTextFieldProps> = ({
         errorMessage={errorText ?? (errors[name] as string)}
         keyboardType={keyboardType}
         secureTextEntry={isSecure ? isPasswordHidden : isSecure}
-        style={[tw`rounded-lg bg-white m-1`, {height}, style]}
+        style={[tw`rounded-lg bg-white m-1`, {height}]}
         inputContainerStyle={styles.inputContainerStyle}
         labelStyle={styles.labelStyle}
         errorStyle={styles.errorStyle}
