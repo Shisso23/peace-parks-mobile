@@ -5,6 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { ForgotPasswordPage, HomePage, ProfilePage, TermsAndConditionsPage } from '../../components';
 import { useTheme } from '../../hooks';
 import { AppStackList, DrawerList } from './types';
+import { ContentPage } from '../../components/pages/app/content/content.page';
 
 const AppStack = createStackNavigator<AppStackList>();
 const Drawer = createDrawerNavigator<DrawerList>();
@@ -43,6 +44,11 @@ const DrawerNavigator = () => {
         name="Profile"
         component={ProfilePage}
         options={{ headerShown: true, title: 'Settings' }}
+      />
+      <Drawer.Screen
+        name="Content"
+        component={ContentPage}
+        options={{ headerShown: true, title: 'Content' }}
       />
     </Drawer.Navigator>
   );

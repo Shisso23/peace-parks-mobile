@@ -51,10 +51,26 @@ const confirmPassword = (password: string) => {
   });
 };
 
+const getUserInfo = (id: string) => {
+  const url = userUrls.userInfoUrl(id);
+
+  return authNetworkService.get(url).catch((error) => {
+      return Promise.reject(error);
+  });
+};
+
+const getUserProfilePic = (id: string) => {
+  const url = userUrls.userProfilePicUrl(id);
+
+  return authNetworkService.get(url).catch((error) => { return Promise.reject(error)});
+};
+
 export default {
   getUser,
   updateUser,
   getProfilePic,
   changeProfilePic,
-  confirmPassword
+  confirmPassword,
+  getUserInfo,
+  getUserProfilePic,
 };

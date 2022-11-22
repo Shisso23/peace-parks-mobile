@@ -27,4 +27,6 @@
     thumbnail6: require('../assets/images/thumbnail-6.png'),
     play: require('../assets/images/play.png'),
     drawerIcon: require('../assets/images/drawer-icon.png'),
+    video: require('../assets/images/video.png'),
+    user: require('../assets/images/user.png'),
   };

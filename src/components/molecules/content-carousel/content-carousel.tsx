@@ -10,10 +10,10 @@ import { ContentCarouselProps } from "./types";
 export const ContentCarousel: React.FC<ContentCarouselProps> = ({categoryId}) => {
     const categoryRef = useQuery([{categoryId}], () => categoryService.getCategory(categoryId));
 
-    const renderVideoThumbnail = (itemData: { item: { thumbnailId: string; heading: string; }; }) => {
+    const renderVideoThumbnail = (itemData: { item: { thumbnailId: string; heading: string; id: string}; }) => {
       return(
         <>
-          <VideoThumbnail thumbnailId={itemData.item.thumbnailId} title={itemData.item.heading}/>
+          <VideoThumbnail thumbnailId={itemData.item.thumbnailId} title={itemData.item.heading} id={itemData.item.id}/>
         </>
       )
     }
