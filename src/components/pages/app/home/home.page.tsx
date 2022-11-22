@@ -2,11 +2,11 @@ import React, { useEffect } from 'react';
 import { Dimensions, FlatList, Image, ImageBackground, StyleSheet, View } from 'react-native';
 import { Input, Text } from '@rneui/themed';
 import { useFocusEffect } from '@react-navigation/native';
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import tw from 'twrnc';
 import { TextInput } from 'react-native-paper';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, UseQueryResult } from '@tanstack/react-query';
 
 import { exitAppOnHardwarePressListener } from '../../../../helpers';
 import { useAppDispatch, signOutAction } from '../../../../reducers';
@@ -22,9 +22,9 @@ const { CancelToken } = axios;
 export const HomePage: React.FC = () => {
   const requestSource = CancelToken.source();
   const dispatch = useAppDispatch();
-  const categories = useQuery(["categories"], categoryService.getCategories);
-  const dailyUpdateRef = useQuery(["dailyUpdate"], contentService.getDailyUpdate);
-  const thumbnailRef = useQuery(["thumbnail"], () => contentService.getThumbnail(dailyUpdateRef.data?.data[0].thumbnailId));
+  const categoriesRef: UseQueryResult<AxiosResponse<any, any>, unknown> = useQuery(["categories"], categoryService.getCategories);
+  const dailyUpdateRef: UseQueryResult<AxiosResponse<any, any>, unknown> = useQuery(["dailyUpdate"], contentService.getDailyUpdate);
+  const thumbnailRef: UseQueryResult<AxiosResponse<any, any>, unknown> = useQuery(["thumbnail", dailyUpdateRef?.data?.data ?? '',], () => contentService.getThumbnail(dailyUpdateRef.data?.data[0].thumbnailId));
 
   const _signOut = () => {
     dispatch(signOutAction());
@@ -41,7 +41,7 @@ export const HomePage: React.FC = () => {
       <>
       <Text style={tw`text-green-600 text-lg mt-2 mb-2 ml-4`}>Genres</Text>
         <FlatList
-          data={categories.data?.data}
+          data={categoriesRef.data?.data}
           renderItem={({item}) =>  (
             <Tag title={item.name}/>
             )}
@@ -87,7 +87,7 @@ export const HomePage: React.FC = () => {
         </View>
       </View>
       <FlatList
-        data={categories.data?.data}
+        data={categoriesRef.data?.data}
         keyExtractor={item => item.id}
         renderItem={({item}) => (
           <>

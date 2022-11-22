@@ -1,5 +1,3 @@
-import { AxiosResponse } from 'axios';
-import { contentModel } from '../../../models/content/content.model';
 import authNetworkService from '../auth-network-service/auth-network.service';
 import contentUrls from './content.urls';
 
@@ -17,7 +15,16 @@ const getDailyUpdate = () => {
     })
 }
 
+const getContentDetail = (id: string) => {
+  const url = contentUrls.contentDetailUrl(id);
+
+  return authNetworkService.get(url).catch((error) => {
+      return Promise.reject(error);
+  })
+}
+
   export default {
     getThumbnail,
     getDailyUpdate,
+    getContentDetail,
   }

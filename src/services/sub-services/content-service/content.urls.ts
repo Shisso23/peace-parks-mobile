@@ -4,5 +4,6 @@ const { hostUrl } = appConfig;
 
 export default {
     thumbnailUrl: (id: string) => `${hostUrl}/User/Content/thumbnail/${id}`,
-    dailyUpdateUrl: () => `${hostUrl}/User/Content?dailyUpdate=true`
+    dailyUpdateUrl: () => `${hostUrl}/User/Content?dailyUpdate=true`,
+    contentDetailUrl: (id: string) => `${hostUrl}/User/Content/content-detail/${id}`
 }
