@@ -29,4 +29,9 @@
     drawerIcon: require('../assets/images/drawer-icon.png'),
     video: require('../assets/images/video.png'),
     user: require('../assets/images/user.png'),
+    home: require('../assets/images/home.png'),
+    info: require('../assets/images/info.png'),
+    characters: require('../assets/images/characters.png'),
+    contact: require('../assets/images/contact.png'),
+    mission: require('../assets/images/mission.png'),
   };

@@ -1,12 +1,13 @@
 import React, { useEffect } from 'react';
-import { Dimensions, FlatList, Image, ImageBackground, StyleSheet, View } from 'react-native';
+import { Dimensions, FlatList, Image, ImageBackground, View } from 'react-native';
 import { Input, Text } from '@rneui/themed';
-import { useFocusEffect } from '@react-navigation/native';
+import { ParamListBase, useFocusEffect, useNavigation } from '@react-navigation/native';
 import axios, { AxiosResponse } from 'axios';
 import tw from 'twrnc';
 import { TextInput } from 'react-native-paper';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useQuery, UseQueryResult } from '@tanstack/react-query';
+import { DrawerNavigationProp } from '@react-navigation/drawer';
 
 import { exitAppOnHardwarePressListener } from '../../../../helpers';
 import { useAppDispatch, signOutAction } from '../../../../reducers';
@@ -16,6 +17,7 @@ import { Tag } from '../../../atoms/tag/tag';
 import categoryService from '../../../../services/sub-services/category-service/category.service';
 import { ContentCarousel } from '../../../molecules/content-carousel/content-carousel';
 import contentService from '../../../../services/sub-services/content-service/content.service';
+import { DrawerStackProps } from '../../../../navigation';
 
 const { CancelToken } = axios;
 
@@ -54,8 +56,13 @@ export const HomePage: React.FC = () => {
 
   useFocusEffect(exitAppOnHardwarePressListener);
 
+  const navigation = useNavigation<DrawerNavigationProp<ParamListBase>>();
+
   return (
     <View style={tw`bg-white h-full pt-${screenHeight*0.015} pb-${screenHeight*0.01}`}>
+      <TouchableOpacity onPress={() => navigation.toggleDrawer()}>
+        <Image source={images.drawerIcon} resizeMode="contain" style={tw`h-6 w-6 ml-3 mb-4 mt-4`}/>
+      </TouchableOpacity>
       <View style={tw`px-4 bg-white`}>
         <View style={[tw`border-2 rounded-xl mb-10 pt-4 border-gray-200`]}>
           <Input

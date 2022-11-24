@@ -6,6 +6,11 @@ import { ForgotPasswordPage, HomePage, ProfilePage, TermsAndConditionsPage } fro
 import { useTheme } from '../../hooks';
 import { AppStackList, DrawerList } from './types';
 import { ContentPage } from '../../components/pages/app/content/content.page';
+import { CharactersPage } from '../../components/pages/app/characters/characters';
+import { AccountPage } from '../../components/pages/app/account/account';
+import { AboutUsPage } from '../../components/pages/app/about-us/about-us';
+import { ContactUsPage } from '../../components/pages/app/contact-us/contact-us';
+import { CustomDrawer } from '../../components/molecules/custom-drawer/custom-drawer';
 
 const AppStack = createStackNavigator<AppStackList>();
 const Drawer = createDrawerNavigator<DrawerList>();
@@ -26,6 +31,16 @@ export const AppNavigator = () => {
         options={{ title: 'Forgot Password' }}
       />
       <AppStack.Screen name="TermsAndConditions" component={TermsAndConditionsPage} />
+      <AppStack.Screen
+        name="Profile"
+        component={ProfilePage}
+        options={{ title: 'Profile' }}
+      />
+      <AppStack.Screen
+        name="Content"
+        component={ContentPage}
+        options={{ title: 'Content' }}
+      />
     </AppStack.Navigator>
   );
 };
@@ -34,21 +49,31 @@ const DrawerNavigator = () => {
   const { Navigator } = useTheme();
 
   return (
-    <Drawer.Navigator screenOptions={Navigator.globalNavigatorScreenOptions}>
+    <Drawer.Navigator screenOptions={Navigator.globalNavigatorScreenOptions} drawerContent={(props) => <CustomDrawer {...props}/>}>
       <Drawer.Screen
         name="Home"
         component={HomePage}
-        options={{ headerShown: true, title: 'Home' }}
+        options={{ headerShown: false, title: 'Home' }}
       />
       <Drawer.Screen
-        name="Profile"
-        component={ProfilePage}
+        name="Account"
+        component={AccountPage}
         options={{ headerShown: true, title: 'Settings' }}
       />
       <Drawer.Screen
-        name="Content"
-        component={ContentPage}
-        options={{ headerShown: true, title: 'Content' }}
+        name="Characters"
+        component={CharactersPage}
+        options={{ headerShown: true, title: 'Characters' }}
+      />
+      <Drawer.Screen
+        name="AboutUs"
+        component={AboutUsPage}
+        options={{ headerShown: true, title: 'About Us' }}
+      />
+      <Drawer.Screen
+        name="ContactUs"
+        component={ContactUsPage}
+        options={{ headerShown: true, title: 'Contact Us' }}
       />
     </Drawer.Navigator>
   );
