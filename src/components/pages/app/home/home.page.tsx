@@ -17,7 +17,6 @@ import { Tag } from '../../../atoms/tag/tag';
 import categoryService from '../../../../services/sub-services/category-service/category.service';
 import { ContentCarousel } from '../../../molecules/content-carousel/content-carousel';
 import contentService from '../../../../services/sub-services/content-service/content.service';
-import { DrawerStackProps } from '../../../../navigation';
 
 const { CancelToken } = axios;
 

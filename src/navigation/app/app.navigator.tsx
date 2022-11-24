@@ -34,12 +34,17 @@ export const AppNavigator = () => {
       <AppStack.Screen
         name="Profile"
         component={ProfilePage}
-        options={{ title: 'Profile' }}
+        options={{ headerShown: false, title: 'Profile' }}
       />
       <AppStack.Screen
         name="Content"
         component={ContentPage}
         options={{ title: 'Content' }}
+      />
+      <AppStack.Screen
+        name="Account"
+        component={AccountPage}
+        options={{ headerShown: false, title: 'Account' }}
       />
     </AppStack.Navigator>
   );
@@ -58,7 +63,7 @@ const DrawerNavigator = () => {
       <Drawer.Screen
         name="Account"
         component={AccountPage}
-        options={{ headerShown: true, title: 'Settings' }}
+        options={{ headerShown: false, title: 'Account' }}
       />
       <Drawer.Screen
         name="Characters"

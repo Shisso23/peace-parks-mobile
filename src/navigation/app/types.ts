@@ -7,6 +7,7 @@ export type AppStackList = {
   ResetPassword: undefined;
   Profile: undefined;
   Content: {id: string};
+  Account: undefined;
 };
 export type AppStackProps = StackNavigationProp<AppStackList>;
 
