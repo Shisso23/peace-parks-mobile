@@ -103,13 +103,13 @@ export const ProfileForm = () => {
       <View style={tw`flex flex-row border-b border-b-green-300 mb-4`}>
           <Text style={tw`mb-2`}>Change Password</Text>
         <TouchableOpacity style={tw`ml-auto mr-2 mb-2`} onPress={_handleResetPassword}>
-          <Image source={images.rightArrow} style={tw`w-6 h-6 object-contain`}/>
+          <Image source={images.rightArrow} style={tw`w-6 h-6`} resizeMode="contain"/>
         </TouchableOpacity>
       </View>
       <View style={tw`flex flex-row border-b border-b-green-300 mb-4`}>
         <Text style={tw`mb-4`}>Privacy Policy</Text>
         <TouchableOpacity style={tw`ml-auto mr-2 mb-2`} onPress={_goToPrivacyPolicy}>
-          <Image source={images.rightArrow} style={tw`w-6 h-6 object-contain`}/>
+          <Image source={images.rightArrow} style={tw`w-6 h-6`} resizeMode="contain"/>
         </TouchableOpacity>
       </View>
       <Button title="Save" onPress={handleSubmit} loading={isSubmitting} style={tw`mb-10`}/>
