@@ -73,7 +73,7 @@ const DrawerNavigator = () => {
       <Drawer.Screen
         name="AboutUs"
         component={AboutUsPage}
-        options={{ headerShown: true, title: 'About Us' }}
+        options={{ headerShown: false, title: 'About Us' }}
       />
       <Drawer.Screen
         name="ContactUs"

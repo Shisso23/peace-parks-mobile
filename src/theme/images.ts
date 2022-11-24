@@ -34,9 +34,5 @@
     characters: require('../assets/images/characters.png'),
     contact: require('../assets/images/contact.png'),
     mission: require('../assets/images/mission.png'),
-    favourites: require('../assets/images/favourites.png'),
-    downloads: require('../assets/images/downloads.png'),
-    settings: require('../assets/images/settings.png'),
-    support: require('../assets/images/support.png'),
-    signOut: require('../assets/images/sign-out.png'),
+    aboutUs: require('../assets/images/about-us.png'),
   };
