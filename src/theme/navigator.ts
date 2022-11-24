@@ -16,7 +16,12 @@ export default ({ Colors, FontFamily }) => ({
     },
     headerTintColor: Colors.white,
     cardStyle: {
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.transparent,
     },
+    drawerStyle: {
+      backgroundColor: Colors.transparent,
+      width: '100%'
+    },
+    drawerType: 'front',
   },
 });
