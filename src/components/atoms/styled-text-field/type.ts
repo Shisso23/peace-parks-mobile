@@ -16,4 +16,6 @@ export type StyledTextFieldProps = {
   height?: number;
   style?: Style;
   defaultValue?: any;
+  multiline?: boolean;
+  inputStyle?: Style;
 };

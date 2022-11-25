@@ -21,7 +21,9 @@ export const StyledTextField: React.FC<StyledTextFieldProps> = ({
   mode,
   height,
   style,
-  defaultValue
+  defaultValue,
+  multiline,
+  inputStyle,
 }) => {
   const { setFieldValue, handleBlur, values, errors } = useFormikContext<any>();
 
@@ -51,12 +53,13 @@ export const StyledTextField: React.FC<StyledTextFieldProps> = ({
         errorMessage={errorText ?? (errors[name] as string)}
         keyboardType={keyboardType}
         secureTextEntry={isSecure ? isPasswordHidden : isSecure}
-        style={[tw`rounded-lg bg-white m-1`, {height}]}
+        style={[inputStyle ?? tw`rounded-lg bg-white m-1`, {height}]}
         inputContainerStyle={styles.inputContainerStyle}
         labelStyle={styles.labelStyle}
         errorStyle={styles.errorStyle}
         selectionColor={Colors.grey} 
         placeholderTextColor={Colors.grey}
+        multiline={multiline ?? false}
         rightIcon={isSecure ? <TextInput.Icon
           name={isPasswordHidden ? "eye-off" : "eye"}
           color={Colors.grey}
