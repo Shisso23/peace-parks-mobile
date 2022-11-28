@@ -1,17 +1,18 @@
-import { useRoute } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import { Input } from "@rneui/base";
 import { Text } from "@rneui/themed";
 import { useQuery, useQueryClient, UseQueryResult } from "@tanstack/react-query";
 import { AxiosResponse } from "axios";
 import React, { useEffect, useState } from "react";
-import { FlatList, ScrollView, View } from "react-native";
+import { FlatList, Image, ScrollView, TouchableOpacity, View } from "react-native";
 import { TextInput } from "react-native-paper";
 import Toast from "react-native-toast-message";
 import tw from 'twrnc';
 
-import { AppStackPropsWithParams } from "../../../../navigation";
+import { AppStackPropsWithParams, DrawerStackProps } from "../../../../navigation";
 import commentService from "../../../../services/sub-services/comment-service/comment.service";
 import contentService from "../../../../services/sub-services/content-service/content.service";
+import images from "../../../../theme/images";
 import { Colors } from "../../../../theme/variables";
 import { CharacterCard } from "../../../molecules/character-card/character-card";
 import { UserComment } from "../../../molecules/user-comment/user-comment";
@@ -46,11 +47,17 @@ export const ContentPage: React.FC = () => {
         }
     }
 
+    const navigation = useNavigation<DrawerStackProps>();
+    const _goToHome = () => navigation.navigate('Home');
+
     return(
         <View style={tw`bg-white h-full`}>
             <View style={tw`flex-1 bg-white`}>
-                <View style={tw`h-[80%] bg-green-600 justify-center`}>
-                    <Text style={tw`text-lg font-bold text-black self-center`}>{'<'}Video{'>'}</Text>
+                <View style={tw`h-[80%] bg-green-700 pt-8`}>
+                    <TouchableOpacity style={tw`flex flex-row mb-4 mt-6 ml-4`} onPress={_goToHome}>
+                        <Image source={images.back} resizeMode="contain" style={tw`h-8 w-16 mt-1`} />
+                    </TouchableOpacity>
+                    <Image source={images.logo} resizeMode="contain" style={tw`w-40 h-20 self-center mt-[10%]`}/>
                 </View>
                 <View style={tw`flex flex-row ml-2 mt-2 px-2`}>
                     <Text style={tw`flex-1 text-xl`}>{contentRef.data?.data.content.heading}</Text>

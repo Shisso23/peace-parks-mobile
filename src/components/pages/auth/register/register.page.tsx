@@ -16,7 +16,7 @@ export const RegisterPage: React.FC = () => {
   const _handleLogin = () => navigation.navigate('SignIn');
 
   return (
-    <FormScreenPeaceParks contentContainerStyle={tw`px-5 pt-15`}>
+    <FormScreenPeaceParks contentContainerStyle={tw`px-5 pt-15 bg-white`}>
       <View>
           <TouchableOpacity style={tw`flex flex-row mb-4`} delayPressIn={0} onPress={_handleLogin}>
             <Image source={Images.backArrow} style={styles.backArrow} />

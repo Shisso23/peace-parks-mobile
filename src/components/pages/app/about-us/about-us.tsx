@@ -35,8 +35,8 @@ export const AboutUsPage: React.FC = () => {
           </ImageBackground>
           <ScrollView style={tw`flex-1`}>
             <Text style={tw`mt-8 mb-4 ml-5 text-xl`}>About Us</Text>
-            <Text style={tw`mb-4 ml-4 text-sm`}>{aboutUsRef.data?.data.description}</Text>
-            <Text style={tw`mt-2 ml-4 text-xl`}>Learn more at Peaceparks.org.</Text>
+            <Text style={tw`mb-4 mx-4 text-sm`}>{aboutUsRef.data?.data.description}</Text>
+            <Text style={tw`mt-2 mx-4 text-xl`}>Learn more at Peaceparks.org.</Text>
             <TouchableOpacity style={tw`mt-6 mb-8 mx-4 bg-yellow-500 p-2 rounded-lg`} onPress={_visitWebsite}>
               <Text style={tw`text-white text-lg self-center`}>Visit our main website</Text>
             </TouchableOpacity>

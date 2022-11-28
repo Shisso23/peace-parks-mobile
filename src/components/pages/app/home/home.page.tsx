@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Dimensions, FlatList, Image, ImageBackground, View } from 'react-native';
 import { Input, Text } from '@rneui/themed';
 import { ParamListBase, useFocusEffect, useNavigation } from '@react-navigation/native';
@@ -6,7 +6,7 @@ import axios, { AxiosResponse } from 'axios';
 import tw from 'twrnc';
 import { TextInput } from 'react-native-paper';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { useQuery, UseQueryResult } from '@tanstack/react-query';
+import { useQuery, useQueryClient, UseQueryResult } from '@tanstack/react-query';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
 
 import { exitAppOnHardwarePressListener } from '../../../../helpers';
@@ -17,25 +17,33 @@ import { Tag } from '../../../atoms/tag/tag';
 import categoryService from '../../../../services/sub-services/category-service/category.service';
 import { ContentCarousel } from '../../../molecules/content-carousel/content-carousel';
 import contentService from '../../../../services/sub-services/content-service/content.service';
+import { AppStackProps } from '../../../../navigation';
+import { Content } from '../../../../models/content/types';
+import { Category } from '../../../../models/category/types';
 
 const { CancelToken } = axios;
 
 export const HomePage: React.FC = () => {
   const requestSource = CancelToken.source();
   const dispatch = useAppDispatch();
-  const categoriesRef: UseQueryResult<AxiosResponse<any, any>, unknown> = useQuery(["categories"], categoryService.getCategories);
-  const dailyUpdateRef: UseQueryResult<AxiosResponse<any, any>, unknown> = useQuery(["dailyUpdate"], contentService.getDailyUpdate);
-  const thumbnailRef: UseQueryResult<AxiosResponse<any, any>, unknown> = useQuery(["thumbnail", dailyUpdateRef?.data?.data ?? '',], () => contentService.getThumbnail(dailyUpdateRef.data?.data[0].thumbnailId));
+  const categoriesRef: UseQueryResult<AxiosResponse<Category, unknown>> = useQuery(["categories"], categoryService.getCategories);
+  const dailyUpdateRef: UseQueryResult<AxiosResponse<Content, unknown>> = useQuery(["dailyUpdate"], contentService.getDailyUpdate);
+  const thumbnailRef: UseQueryResult<AxiosResponse<string, unknown>> = useQuery(["thumbnail", dailyUpdateRef?.data?.data ?? '',], () => contentService.getThumbnail(dailyUpdateRef.data?.data[0].thumbnailId));
 
-  const _signOut = () => {
-    dispatch(signOutAction());
-  };
+  const [search, setSearch] = useState<string>('');
 
   useEffect(() => {
     return () => {
       requestSource.cancel();
     };
   });
+
+  const searchRef: UseQueryResult<AxiosResponse<Content, unknown>> = useQuery(["searchContent"], () => contentService.searchContent(search));
+  const queryClient = useQueryClient();
+
+  useEffect(() => {
+    queryClient.fetchQuery({queryKey: ['searchContent']});
+  }, [search])
 
   const getHeader = () => {
     return(
@@ -56,6 +64,8 @@ export const HomePage: React.FC = () => {
   useFocusEffect(exitAppOnHardwarePressListener);
 
   const navigation = useNavigation<DrawerNavigationProp<ParamListBase>>();
+  const appNavigation = useNavigation<AppStackProps>();
+
 
   return (
     <View style={tw`bg-white h-full pt-${screenHeight*0.015} pb-${screenHeight*0.01}`}>
@@ -65,6 +75,8 @@ export const HomePage: React.FC = () => {
       <View style={tw`px-4 bg-white`}>
         <View style={[tw`border-2 rounded-xl mb-10 pt-4 border-gray-200`]}>
           <Input
+            value={search}
+            onChangeText={setSearch}
             style={[tw`rounded-lg bg-white my-1 mr-1 ml-8 h-0`]}
             placeholder="Search"
             placeholderTextColor={Colors.grey}
@@ -75,6 +87,23 @@ export const HomePage: React.FC = () => {
               color={Colors.grey}
               style={tw`ml-8`}/>}
               />
+            {(search!=='') ?
+              <FlatList
+                data={searchRef.data?.data}
+                renderItem={({item}) => (
+                  <>
+                    <TouchableOpacity onPress={()=> appNavigation.navigate("Content", {id: item.id })} style={tw`bg-gray-50 rounded-lg py-1`}>
+                      <Text style={tw`ml-8 text-lg font-medium text-green-600`}>{item.heading}</Text>
+                    </TouchableOpacity>
+                  </>
+                )}
+              />
+            : <></>}
+            {(search!=='' && searchRef.data?.data.length == 0) ?
+              <View style={tw`bg-gray-50 rounded-lg py-1`}>
+              <Text style={tw`ml-8 text-sm font-medium text-green-600`}>No results, please refine your search.</Text>
+              </View>
+             : <></>}
         </View>
         <View style={{backgroundColor: Colors.transparent}}>
           <ImageBackground source={{uri: `data:image/jpeg;base64,${thumbnailRef.data?.data}`}} resizeMode="cover" style={tw`w-full h-${screenHeight*0.05}`} imageStyle={tw`rounded-lg`}>
@@ -83,7 +112,7 @@ export const HomePage: React.FC = () => {
                 <Text style={tw`text-black`}>Today's Update</Text>
               </View>
               <View style={[tw`mt-auto ml-4 mb-6 w-[50%]`]}>
-                <Text style={[tw`text-white font-semibold`]}>{dailyUpdateRef.data?.data[0].heading}</Text>
+                <Text style={[tw`text-white font-bold`]}>{dailyUpdateRef.data?.data[0].heading}</Text>
               </View>
               <View style={tw`bg-green-600 w-10 h-10 p-2 rounded-full justify-center items-center absolute right-6 -bottom-4 z-50`}>
                 <Image source={images.play} resizeMode="contain" style={tw`w-4 h-4`}/>
