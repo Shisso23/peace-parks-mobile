@@ -23,5 +23,5 @@ export const FontSize = {
 export const FontFamily = {
   primary: 'system font',
   secondary: 'system font',
-  tertiary: 'Arial',
+  tertiary: 'Avenir',
 };

@@ -39,7 +39,7 @@ export const AppNavigator = () => {
       <AppStack.Screen
         name="Content"
         component={ContentPage}
-        options={{ title: 'Content' }}
+        options={{ headerShown: false ,title: 'Content' }}
       />
       <AppStack.Screen
         name="Account"

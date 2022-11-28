@@ -23,8 +23,17 @@ const getContentDetail = (id: string) => {
   })
 }
 
+const searchContent = (search: string) => {
+  const url = contentUrls.contentSearchUrl(search);
+
+  return authNetworkService.get(url).catch((error) => {
+      return Promise.reject(error);
+  })
+}
+
   export default {
     getThumbnail,
     getDailyUpdate,
     getContentDetail,
+    searchContent,
   }
