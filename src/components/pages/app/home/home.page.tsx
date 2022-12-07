@@ -99,7 +99,7 @@ export const HomePage: React.FC = () => {
                 )}
               />
             : <></>}
-            {(search!=='' && searchRef.data?.data.length == 0) ?
+            {(search!=='' && searchRef.data?.data.length === 0) ?
               <View style={tw`bg-gray-50 rounded-lg py-1`}>
               <Text style={tw`ml-8 text-sm font-medium text-green-600`}>No results, please refine your search.</Text>
               </View>
