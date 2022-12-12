@@ -3,10 +3,12 @@ import { Input } from "@rneui/base";
 import { Text } from "@rneui/themed";
 import { useQuery, useQueryClient, UseQueryResult } from "@tanstack/react-query";
 import { AxiosResponse } from "axios";
+import _ from "lodash";
 import React, { useEffect, useState } from "react";
-import { FlatList, Image, ScrollView, TouchableOpacity, View } from "react-native";
+import { FlatList, Image, ScrollView, StyleSheet, TouchableOpacity, View } from "react-native";
 import { TextInput } from "react-native-paper";
 import Toast from "react-native-toast-message";
+import Video from "react-native-video";
 import tw from 'twrnc';
 
 import { AppStackPropsWithParams, DrawerStackProps } from "../../../../navigation";
@@ -16,26 +18,50 @@ import images from "../../../../theme/images";
 import { Colors } from "../../../../theme/variables";
 import { CharacterCard } from "../../../molecules/character-card/character-card";
 import { UserComment } from "../../../molecules/user-comment/user-comment";
+import appConfig from '../../../../config';
+import storageService from "../../../../services/sub-services/storage-service/storage.service";
 
 export const ContentPage: React.FC = () => {
     const route: AppStackPropsWithParams<"Content"> = useRoute<AppStackPropsWithParams<'Content'>>();
     const contentRef: UseQueryResult<AxiosResponse<any, any>, unknown> = useQuery([route.params?.id], () => contentService.getContentDetail(route.params?.id))
     const commentsRef: UseQueryResult<AxiosResponse<any, any>, unknown> = useQuery([`${route.params?.id}_comments`], () => commentService.getComments(route.params?.id)); 
     
+    const { hostUrl } = appConfig;
+    const videoUrl = `${hostUrl}/User/Content/video/${contentRef.data?.data.content.id}`;
+
+    
+    const queryCache = useQueryClient();
+    const navigation = useNavigation<DrawerStackProps>();
+    
     const timespan = contentRef.data?.data.content.duration;
     const [minutes, setMinutes] = useState<number>(0);
-
+    const [comment, setComment] = useState<string>('');
+    const [accessToken, setAccessToken] = useState<string>('');
+    const [watchedProgress, setWatchedProgress] = useState<number>(0);
+    
+    const _goToHome = () => {
+        saveWatchedProgress();
+        navigation.navigate('Home')
+    };
+    
     useEffect(() => {
         if(timespan != undefined){
             var hms = timespan.split(':');
             setMinutes(parseInt((+hms[0]*60+(hms[1]))));
         }
     }, [timespan]);
-
-    const queryCache = useQueryClient();
-
-    const [comment, setComment] = useState<string>('');
-
+    
+    useEffect(() => {
+        storageService.getAccessToken().then((token) => setAccessToken(token));
+    }, [])
+    
+    const videoConfig = {uri: videoUrl,
+        headers: {
+            accept: `*/*`,
+            Authorization: `bearer ${accessToken}`,
+            range: 'bytes=0-'
+        }}
+    
     const sendComment = (comment: string) => ()=> {
         if(comment == ''){
             Toast.show({type: 'error', text1: 'Cannot Send Message'})
@@ -47,17 +73,30 @@ export const ContentPage: React.FC = () => {
         }
     }
 
-    const navigation = useNavigation<DrawerStackProps>();
-    const _goToHome = () => navigation.navigate('Home');
-
+    const updateWatchedProgress = (progress: { currentTime: React.SetStateAction<number>; }) => {
+        setWatchedProgress(progress.currentTime);
+    }
+    
+    const saveWatchedProgress = () => {
+        //To be implemented when backend is set up
+        console.log(watchedProgress);
+    }
+    
     return(
         <View style={tw`bg-white h-full`}>
             <View style={tw`flex-1 bg-white`}>
-                <View style={tw`h-[80%] bg-green-700 pt-8`}>
-                    <TouchableOpacity style={tw`flex flex-row mb-4 mt-6 ml-4`} onPress={_goToHome}>
+                <View style={tw`h-[80%] bg-black pt-8`}>
+                    <TouchableOpacity style={tw`flex flex-row mb-4 mt-0 ml-4 z-50 w-16`} onPress={_goToHome}>
                         <Image source={images.back} resizeMode="contain" style={tw`h-8 w-16 mt-1`} />
                     </TouchableOpacity>
-                    <Image source={images.logo} resizeMode="contain" style={tw`w-40 h-20 self-center mt-[10%]`}/>
+                    <Video source={videoConfig} 
+                            resizeMode="contain" 
+                            style={styles.backgroundVideo}
+                            controls={true}
+                            repeat={true}
+                            onProgress={updateWatchedProgress}
+                            onPlaybackStalled={saveWatchedProgress}
+                            />
                 </View>
                 <View style={tw`flex flex-row ml-2 mt-2 px-2`}>
                     <Text style={tw`flex-1 text-xl`}>{contentRef.data?.data.content.heading}</Text>
@@ -118,3 +157,13 @@ export const ContentPage: React.FC = () => {
         </View>
     )
 }
+
+const styles = StyleSheet.create({
+    backgroundVideo: {
+      bottom: 0,
+      left: 0,
+      position: 'absolute',
+      right: 0,
+      top: 0,
+    },
+});
