@@ -8,6 +8,7 @@ export type AppStackList = {
   Profile: undefined;
   Content: {id: string};
   Account: undefined;
+  MyFavourites: undefined;
 };
 export type AppStackProps = StackNavigationProp<AppStackList>;
 

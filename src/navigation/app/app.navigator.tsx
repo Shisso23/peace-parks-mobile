@@ -11,6 +11,7 @@ import { AccountPage } from '../../components/pages/app/account/account';
 import { AboutUsPage } from '../../components/pages/app/about-us/about-us';
 import { ContactUsPage } from '../../components/pages/app/contact-us/contact-us';
 import { CustomDrawer } from '../../components/molecules/custom-drawer/custom-drawer';
+import { MyFavouritesPage } from '../../components/pages/app/my-favourites/my-favourites.page';
 
 const AppStack = createStackNavigator<AppStackList>();
 const Drawer = createDrawerNavigator<DrawerList>();
@@ -45,6 +46,11 @@ export const AppNavigator = () => {
         name="Account"
         component={AccountPage}
         options={{ headerShown: false, title: 'Account' }}
+      />
+      <AppStack.Screen
+        name="MyFavourites"
+        component={MyFavouritesPage}
+        options={{ headerShown: false, title: 'My Favourites' }}
       />
     </AppStack.Navigator>
   );

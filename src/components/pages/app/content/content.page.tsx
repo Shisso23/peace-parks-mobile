@@ -1,5 +1,5 @@
 import { useNavigation, useRoute } from "@react-navigation/native";
-import { Input } from "@rneui/base";
+import { Icon, Input } from "@rneui/base";
 import { Text } from "@rneui/themed";
 import { useQuery, useQueryClient, UseQueryResult } from "@tanstack/react-query";
 import { AxiosResponse } from "axios";
@@ -27,13 +27,13 @@ export const ContentPage: React.FC = () => {
     const commentsRef: UseQueryResult<AxiosResponse<any, any>, unknown> = useQuery([`${route.params?.id}_comments`], () => commentService.getComments(route.params?.id)); 
     
     const { hostUrl } = appConfig;
-    const videoUrl = `${hostUrl}/User/Content/video/${contentRef.data?.data.content.id}`;
+    const videoUrl = `${hostUrl}/User/Content/video/${contentRef.data?.data.content.content.id}`;
 
     
     const queryCache = useQueryClient();
     const navigation = useNavigation<DrawerStackProps>();
     
-    const timespan = contentRef.data?.data.content.duration;
+    const timespan = contentRef.data?.data.content.content.duration;
     const [minutes, setMinutes] = useState<number>(0);
     const [comment, setComment] = useState<string>('');
     const [accessToken, setAccessToken] = useState<string>('');
@@ -45,11 +45,18 @@ export const ContentPage: React.FC = () => {
     };
     
     useEffect(() => {
-        if(timespan != undefined){
-            var hms = timespan.split(':');
-            setMinutes(parseInt((+hms[0]*60+(hms[1]))));
+        if(timespan){
+            const hms = timespan.split(':');
+            setMinutes(parseInt((hms[0]*60+(hms[1]))));
         }
     }, [timespan]);
+
+    const [isFavourited, setFavourited] = useState<boolean>(contentRef.data?.data.isFavourited);
+
+    useEffect(() => {
+        setFavourited(contentRef.data?.data.isFavourited);
+    },[contentRef.data?.data.isFavourited])
+
     
     useEffect(() => {
         storageService.getAccessToken().then((token) => setAccessToken(token));
@@ -66,15 +73,22 @@ export const ContentPage: React.FC = () => {
         if(comment == ''){
             Toast.show({type: 'error', text1: 'Cannot Send Message'})
         } else {
-            commentService.sendComment(contentRef.data?.data.content.id, comment);
+            commentService.sendComment(contentRef.data?.data.content.content.id, comment);
             setComment('');
             Toast.show({type: 'success', text1: 'Comment Successfully Sent!'})
             queryCache.refetchQueries({queryKey: [`${route.params?.id}_comments`]});
         }
     }
 
+    const favouriteVideo = () => {
+        setFavourited(!isFavourited);
+        contentService.favouriteVideo(contentRef.data?.data.content.content.id);  
+        queryCache.refetchQueries({queryKey: [route.params?.id]})
+    }
+
     const updateWatchedProgress = (progress: { currentTime: React.SetStateAction<number>; }) => {
         setWatchedProgress(progress.currentTime);
+        console.log(watchedProgress);
     }
     
     const saveWatchedProgress = () => {
@@ -99,12 +113,15 @@ export const ContentPage: React.FC = () => {
                             />
                 </View>
                 <View style={tw`flex flex-row ml-2 mt-2 px-2`}>
-                    <Text style={tw`flex-1 text-xl`}>{contentRef.data?.data.content.heading}</Text>
-                    <Text style={tw`text-sm text-gray-500 mt-1`}>{contentRef.data?.data.content.uploadedDate.substring(0,10)}</Text>
+                    <Text style={tw`flex-1 text-xl`}>{contentRef.data?.data.content.content.heading}</Text>
+                    <TouchableOpacity style={tw`mr-4`} onPress={favouriteVideo}>
+                      <Icon name={isFavourited ? "bookmark" : "bookmark-o"} type="font-awesome"/>
+                    </TouchableOpacity>
+                    <Text style={tw`text-sm text-gray-500 mt-1`}>{contentRef.data?.data.content.content.uploadedDate.substring(0,10)}</Text>
                 </View>
-                <Text style={tw`text-sm text-gray-500 ml-2 px-2`}>{contentRef.data?.data.content.subheading} | {minutes} min</Text>
+                <Text style={tw`text-sm text-gray-500 ml-2 px-2`}>{contentRef.data?.data.content.content.subheading} | {minutes} min</Text>
                 <FlatList
-                    data={contentRef.data?.data.tags}
+                    data={contentRef.data?.data.content.tags}
                     renderItem={({item}) =>  (
                         <Text style={tw`text-sm text-gray-500 mr-4`}>{item.name}</Text>
                         )}
@@ -113,10 +130,10 @@ export const ContentPage: React.FC = () => {
                     style={tw`px-4`}/>
             </View>
             <ScrollView style={tw`flex-1 mt-2 mb-4 px-2`}>
-                <Text style={tw`text-sm ml-2 mt-2`}>{contentRef.data?.data.content.description}</Text>
+                <Text style={tw`text-sm ml-2 mt-2`}>{contentRef.data?.data.content.content.description}</Text>
                 <Text style={tw`text-xl ml-2 mt-2`}>Who is in the video</Text>
                 <FlatList
-                    data={contentRef.data?.data.characters}
+                    data={contentRef.data?.data.content.characters}
                     horizontal={true}
                     renderItem={({item}) => (
                         <CharacterCard 
