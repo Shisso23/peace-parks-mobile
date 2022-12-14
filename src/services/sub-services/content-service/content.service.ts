@@ -34,6 +34,22 @@ const searchContent = (search: string) => {
   })
 }
 
+const getFavourites = () => {
+  const url = contentUrls.favouritesUrl();
+
+  return authNetworkService.get(url).catch((error) => {
+      return Promise.reject(error);
+  })
+}
+
+const favouriteVideo = (id: string) => {
+  const url = contentUrls.favouriteVideoUrl(id);
+
+  return authNetworkService.post(url).catch((error) => {
+      return Promise.reject(error);
+  })
+}
+
 const getVideo: Function = async () => {
   const url = contentUrls.videoUrl();
   const accessToken = await storageService.getAccessToken();
@@ -59,5 +75,7 @@ const getVideo: Function = async () => {
     getDailyUpdate,
     getContentDetail,
     searchContent,
+    getFavourites,
+    favouriteVideo,
     getVideo,
   }

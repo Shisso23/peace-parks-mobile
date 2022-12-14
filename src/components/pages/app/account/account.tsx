@@ -25,6 +25,7 @@ export const AccountPage: React.FC = () => {
     const appNavigation: AppStackProps = useNavigation<AppStackProps>();
     const _goToHome = () => navigation.navigate('Home');
     const _goToProfile = () => appNavigation.navigate('Profile');
+    const _goToFavourites = () => appNavigation.navigate('MyFavourites');
 
     return(
         <ScrollView style={tw`h-full bg-white px-5 py-5`}>
@@ -37,7 +38,7 @@ export const AccountPage: React.FC = () => {
           </View>
           <Image source={{uri: `data:image/jpeg;base64,${profilePic.data?.data}`}} resizeMode="cover" style={tw`self-center mt-4 border-2 border-green-700 h-35 w-35 rounded-full`}/>
           <Text style={tw`self-center mt-4 mb-10 text-lg`}>{userRef.data?.firstName}</Text>
-          <TouchableOpacity style={tw`flex flex-row p-4 bg-emerald-100  rounded-md mb-4`}>
+          <TouchableOpacity style={tw`flex flex-row p-4 bg-emerald-100  rounded-md mb-4`} onPress={_goToFavourites}>
             <Image source={images.favourites} resizeMode="contain" style={tw`h-5 w-5`}/>
             <Text style={tw`ml-4 text-sm text-gray-600`}>My Favourites</Text>
           </TouchableOpacity>
