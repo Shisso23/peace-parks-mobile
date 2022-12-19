@@ -6,7 +6,6 @@ import appConfig from '../../../config';
 
 const storeAccessAndRefreshTokens = (apiResponse: Object) => {
   const accessToken = _.get(apiResponse, 'data.token', null);
-  console.log(accessToken);
   return Promise.all([
     storageService.storeAccessToken(accessToken),
   ]);
