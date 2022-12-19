@@ -3,6 +3,7 @@ import RNFetchBlob from 'rn-fetch-blob';
 import authNetworkService from '../auth-network-service/auth-network.service';
 import contentUrls from './content.urls';
 import storageService from '../storage-service/storage.service';
+import { watchedTimeDto } from './contentDto';
 
 const getThumbnail = (id: string) => {
     const url = contentUrls.thumbnailUrl(id);
@@ -70,6 +71,15 @@ const getVideo: Function = async () => {
       });
 };
 
+const trackWatchedTime = (id: string, currentTime: number) => {
+  const url = contentUrls.trackWatchedTimeUrl(id);
+  const dto = watchedTimeDto(currentTime);
+
+  return authNetworkService.post(url, dto).catch((error) => {
+      Promise.reject(error);
+  })
+}
+
   export default {
     getThumbnail,
     getDailyUpdate,
@@ -78,4 +88,5 @@ const getVideo: Function = async () => {
     getFavourites,
     favouriteVideo,
     getVideo,
+    trackWatchedTime,
   }
