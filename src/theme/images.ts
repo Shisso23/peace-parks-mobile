@@ -40,4 +40,5 @@
     settings: require('../assets/images/settings.png'),
     support: require('../assets/images/support.png'),
     signOut: require('../assets/images/sign-out.png'),
+    hatIcon: require('../assets/images/hat-icon.png'),
   };
