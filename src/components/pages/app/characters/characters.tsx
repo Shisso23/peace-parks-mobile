@@ -24,7 +24,7 @@ export const CharactersPage: React.FC = () => {
             role={itemData.item.role} 
             description={itemData.item.description}/>
 
-      )
+      );
     };
 
     return(

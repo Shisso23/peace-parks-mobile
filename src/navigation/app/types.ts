@@ -9,6 +9,7 @@ export type AppStackList = {
   Content: {id: string};
   Account: undefined;
   MyFavourites: undefined;
+  CharacterContent: {id: string};
 };
 export type AppStackProps = StackNavigationProp<AppStackList>;
 

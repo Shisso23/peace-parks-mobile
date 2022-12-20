@@ -8,6 +8,14 @@ const getProfilePic = (id: string) => {
   return authNetworkService.get(url).catch((error) => { return Promise.reject(error)});
 };
 
+const getCharacterContent = (id: string) => {
+  const url = characterUrls.characterContentUrl(id);
+
+  return authNetworkService.get(url).catch((error) => {
+      return Promise.reject(error);
+  });
+};
+
 const getCharacters = () => {
   const url = characterUrls.charactersUrl();
   
@@ -16,5 +24,6 @@ const getCharacters = () => {
 
 export default {
     getProfilePic,
+    getCharacterContent,
     getCharacters,
 }
