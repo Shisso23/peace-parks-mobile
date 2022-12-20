@@ -41,4 +41,5 @@
     support: require('../assets/images/support.png'),
     signOut: require('../assets/images/sign-out.png'),
     hatIcon: require('../assets/images/hat-icon.png'),
+    binoculars: require('../assets/images/binoculars.png'),
   };
