@@ -74,6 +74,7 @@ export const ContentPage: React.FC = () => {
     }, [timespan]);
 
     const [isFavourited, setFavourited] = useState<boolean>(contentRef.data?.data.isFavourited);
+    const [isLiked, setLiked] = useState<boolean>(contentRef.data?.data.isLiked);
 
     useEffect(() => {
         setFavourited(contentRef.data?.data.isFavourited);
@@ -105,6 +106,13 @@ export const ContentPage: React.FC = () => {
     const favouriteVideo = () => {
         setFavourited(!isFavourited);
         contentService.favouriteVideo(contentRef.data?.data.content.content.id).then(() => {
+            queryCache.refetchQueries({ queryKey: [route.params?.id] })
+        });
+    }
+
+    const likeVideo = () => {
+        setLiked(!isLiked);
+        contentService.likeVideo(contentRef.data?.data.content.content.id).then(() => {
             queryCache.refetchQueries({ queryKey: [route.params?.id] })
         });
     }
@@ -157,6 +165,9 @@ export const ContentPage: React.FC = () => {
                 </View>
                 <View style={tw`flex flex-row ml-2 mt-2 px-2`}>
                     <Text style={tw`flex-1 text-xl`}>{contentRef.data?.data.content.content.heading}</Text>
+                    <TouchableOpacity style={tw`mr-4`} onPress={likeVideo}>
+                        <Icon name={isLiked ? "thumb-up" : "thumb-up-outline"} type="material-community" />
+                    </TouchableOpacity>
                     <TouchableOpacity style={tw`mr-4`} onPress={favouriteVideo}>
                         <Icon name={isFavourited ? "bookmark" : "bookmark-o"} type="font-awesome" />
                     </TouchableOpacity>

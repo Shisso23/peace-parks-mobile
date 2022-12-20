@@ -51,8 +51,16 @@ const favouriteVideo = (id: string) => {
   })
 }
 
-const getVideo: Function = async () => {
-  const url = contentUrls.videoUrl();
+const likeVideo = (id: string) => {
+  const url = contentUrls.likeVideoUrl(id);
+
+  return authNetworkService.post(url).catch((error) => {
+      return Promise.reject(error);
+  })
+}
+
+const getVideo: Function = async (id: string) => {
+  const url = contentUrls.videoUrl(id);
   const accessToken = await storageService.getAccessToken();
 
   return RNFetchBlob.config({ fileCache: true, appendExt: 'mp4'}).
@@ -87,6 +95,7 @@ const trackWatchedTime = (id: string, currentTime: number) => {
     searchContent,
     getFavourites,
     favouriteVideo,
+    likeVideo,
     getVideo,
     trackWatchedTime,
   }
