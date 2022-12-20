@@ -4,4 +4,5 @@ const { hostUrl } = appConfig;
 
 export default {
     characterPicUrl: (id: string) => `${hostUrl}/User/Character/profile-pic/${id}`,
+    charactersUrl: () => `${hostUrl}/User/Character`
 }
